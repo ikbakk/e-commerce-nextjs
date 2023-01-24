@@ -1,7 +1,13 @@
 import HeroBanner from '@/components/HeroBanner';
 import Head from 'next/head';
+import { sanityClient } from '../utils/sanity';
+import { IBanner } from 'typing';
 
-export default function Home() {
+type Props = {
+  dataBanner: IBanner;
+};
+
+export default function Home({ dataBanner }: Props) {
   return (
     <>
       <Head>
@@ -14,8 +20,33 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main>
-        <HeroBanner />
+        <HeroBanner data={dataBanner} />
       </main>
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const queryBanner = `*[_type == "banner" ][0]{
+      buttonText, 
+      desc, 
+      discount, 
+      image, 
+      largeText1, 
+      largeText2, 
+      midText, 
+      product, 
+      saletime, 
+      smallText
+    }`;
+  const queryProduct = '*[_type == "product" ]';
+
+  const dataBanner = await sanityClient.fetch(queryBanner);
+  const dataProduct = await sanityClient.fetch(queryProduct);
+  return {
+    props: {
+      dataBanner,
+      dataProduct
+    }
+  };
+};
