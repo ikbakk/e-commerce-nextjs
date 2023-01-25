@@ -1,14 +1,17 @@
-import { useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useStateContext } from '@/context/Statecontext';
+import { useRef } from 'react';
+
 import {
   AiOutlineLeft,
   AiOutlineMinus,
   AiOutlinePlus,
   AiOutlineShoppingCart
 } from 'react-icons/ai';
-import Image from 'next/image';
+import { TiDeleteOutline } from 'react-icons/ti';
+
 import { imgUrl } from '@/utils/sanity';
-import Link from 'next/link';
 import { IProduct } from 'typing';
 
 const Cart = () => {
@@ -17,10 +20,9 @@ const Cart = () => {
     setShowCart,
     showCart,
     cartItems,
-    setCartItems,
-    increaseQuantity,
-    decreaseQuantity,
-    cartItemQuantity
+    cartItemQuantity,
+    removeCartItem,
+    totalPrice
   } = useStateContext();
   const cartRef = useRef<HTMLDivElement>(null);
 
@@ -60,46 +62,70 @@ const Cart = () => {
             </Link>
           </div>
         )}
-        {cartItems.length >= 1 &&
-          cartItems.map((item: IProduct) => {
-            return (
-              <div
-                key={item._id}
-                className='group flex gap-3 rounded-lg bg-base-200/40 p-2 duration-200 hover:bg-base-300'>
-                <figure className='flex items-center justify-center rounded-lg bg-primary/80 p-2 duration-200 group-hover:bg-primary'>
-                  <Image
-                    src={imgUrl(item.image[0]).url()}
-                    alt='item iamge'
-                    width={100}
-                    height={100}
-                  />
-                </figure>
-                <div className='flex w-full flex-col gap-3'>
-                  <hgroup className='flex w-full flex-col md:flex-row md:justify-between'>
-                    <h3 className='text-xl font-semibold text-primary-content'>
-                      {item.name}
-                    </h3>
-                    <h3 className='text-lg font-bold text-primary-content'>
-                      Rp{numberFormatter.format(item.price)}.000
-                    </h3>
-                  </hgroup>
-                  <div className='flex w-full items-center justify-between md:w-[50%]'>
-                    <figure
-                      onClick={() => cartItemQuantity(item._id, 'decrease')}
-                      className='rounded-lg bg-primary p-2 text-base-300 hover:cursor-pointer hover:bg-primary-focus active:scale-95'>
-                      <AiOutlineMinus size={18} />
+        <section className='flex h-[90vh] flex-col justify-between gap-2'>
+          <div className='h-[85%]'>
+            {cartItems.length >= 1 &&
+              cartItems.map((item: IProduct) => {
+                return (
+                  <div
+                    key={item._id}
+                    className='group flex gap-3 rounded-lg bg-base-200/40 p-2 duration-200 hover:bg-base-300'>
+                    <figure className='flex items-center justify-center rounded-lg bg-primary/80 p-2 duration-200 group-hover:bg-primary'>
+                      <Image
+                        src={imgUrl(item.image[0]).url()}
+                        alt='item iamge'
+                        width={100}
+                        height={100}
+                      />
                     </figure>
-                    <p className='text-lg font-medium'>{item.quantities}</p>
-                    <figure
-                      onClick={() => cartItemQuantity(item._id, 'increase')}
-                      className='rounded-lg bg-primary p-2 text-base-300 hover:cursor-pointer hover:bg-primary-focus active:scale-95'>
-                      <AiOutlinePlus size={18} />
-                    </figure>
+                    <div className='flex w-full flex-col gap-3'>
+                      <hgroup className='flex w-full flex-col md:flex-row md:justify-between'>
+                        <h3 className='text-xl font-semibold text-primary-content'>
+                          {item.name}
+                        </h3>
+                        <h3 className='text-lg font-bold text-primary-content'>
+                          Rp{numberFormatter.format(item.price)}.000
+                        </h3>
+                      </hgroup>
+                      <div className='flex w-full items-center justify-between'>
+                        <div className='flex w-[60%] items-center justify-between md:w-[50%]'>
+                          <figure
+                            onClick={() =>
+                              cartItemQuantity(item._id, 'decrease')
+                            }
+                            className='rounded-lg bg-primary p-2 text-base-300 hover:cursor-pointer hover:bg-primary-focus active:scale-95'>
+                            <AiOutlineMinus size={18} />
+                          </figure>
+                          <p className='text-lg font-medium'>
+                            {item.quantities}
+                          </p>
+                          <figure
+                            onClick={() =>
+                              cartItemQuantity(item._id, 'increase')
+                            }
+                            className='rounded-lg bg-primary p-2 text-base-300 hover:cursor-pointer hover:bg-primary-focus active:scale-95'>
+                            <AiOutlinePlus size={18} />
+                          </figure>
+                        </div>
+                        <figure
+                          onClick={() => removeCartItem(item)}
+                          className='rounded-lg text-primary-content duration-200 hover:cursor-pointer hover:bg-primary active:scale-90'>
+                          <TiDeleteOutline size={32} />
+                        </figure>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
+          </div>
+          <div className='flex h-[15%] w-full flex-col gap-3'>
+            <hgroup className='flex justify-between text-xl font-medium'>
+              <h3>Subtotal: </h3>
+              <h3>Rp{numberFormatter.format(totalPrice)}.000</h3>
+            </hgroup>
+            <button className='btn-primary btn rounded-lg'>Checkout</button>
+          </div>
+        </section>
       </section>
     </aside>
   );

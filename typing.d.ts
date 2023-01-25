@@ -41,4 +41,5 @@ export interface IContextType {
   decreaseQuantity: () => void;
   onAdd: (product: IProduct, quantites: number) => void;
   cartItemQuantity: (id: string, value: 'increase' | 'decrease') => void;
+  removeCartItem: (product: IProduct) => void;
 }

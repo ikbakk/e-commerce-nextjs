@@ -85,6 +85,22 @@ const Statecontext = ({ children }: IProps) => {
       }
   };
 
+  const removeCartItem = (product: IProduct) => {
+    foundProduct = cartItems.find((item: IProduct) => item._id === product._id);
+    const newCartItems = cartItems.filter(
+      (item: IProduct) => item._id !== product._id
+    );
+
+    setTotalPrice(
+      (prevTotalPrice) =>
+        prevTotalPrice - foundProduct.price * foundProduct.quantities
+    );
+    setTotalQuantity(
+      (prevTotalQuantity) => prevTotalQuantity - foundProduct.quantities
+    );
+    setCartItems(newCartItems);
+  };
+
   return (
     <Context.Provider
       value={{
@@ -98,7 +114,8 @@ const Statecontext = ({ children }: IProps) => {
         increaseQuantity,
         decreaseQuantity,
         onAdd,
-        cartItemQuantity
+        cartItemQuantity,
+        removeCartItem
       }}>
       {children}
     </Context.Provider>
