@@ -8,9 +8,20 @@ import {
 } from 'react-icons/ai';
 import Image from 'next/image';
 import { imgUrl } from '@/utils/sanity';
+import Link from 'next/link';
+import { IProduct } from 'typing';
 
 const Cart = () => {
-  const { totalQuantity, setShowCart, showCart, cartItems } = useStateContext();
+  const {
+    totalQuantity,
+    setShowCart,
+    showCart,
+    cartItems,
+    setCartItems,
+    increaseQuantity,
+    decreaseQuantity,
+    cartItemQuantity
+  } = useStateContext();
   const cartRef = useRef<HTMLDivElement>(null);
 
   const sidebar = showCart
@@ -42,45 +53,53 @@ const Cart = () => {
               <AiOutlineShoppingCart size={150} />
             </figure>
             <h2 className='text-lg font-medium'>Your cart is Empty</h2>
-            <button className='btn-primary btn rounded-lg'>
-              Order Something
-            </button>
+            <Link onClick={() => setShowCart(false)} href='/'>
+              <button className='btn-primary btn rounded-lg'>
+                Order Something
+              </button>
+            </Link>
           </div>
         )}
         {cartItems.length >= 1 &&
-          cartItems.map((item: any) => (
-            <div
-              key={item._id}
-              className='group flex gap-3 rounded-lg bg-base-200/40 p-2 duration-200 hover:bg-base-300'>
-              <figure className='flex items-center justify-center rounded-lg bg-primary/80 p-2 duration-200 group-hover:bg-primary'>
-                <Image
-                  src={imgUrl(item.image[0]).url()}
-                  alt='item iamge'
-                  width={100}
-                  height={100}
-                />
-              </figure>
-              <div className='flex flex-col gap-3'>
-                <hgroup className='flex w-full flex-col md:flex-row md:justify-between'>
-                  <h3 className='text-xl font-semibold text-primary-content'>
-                    {item.name}
-                  </h3>
-                  <h3 className='text-lg font-bold text-primary-content'>
-                    Rp{numberFormatter.format(item.price)}.000
-                  </h3>
-                </hgroup>
-                <div className='flex w-full items-center justify-between'>
-                  <figure className='rounded-lg bg-primary p-2 text-base-300 hover:cursor-pointer hover:bg-primary-focus active:scale-95'>
-                    <AiOutlineMinus size={18} />
-                  </figure>
-                  <p className='text-lg font-medium'>{item.quantities}</p>
-                  <figure className='rounded-lg bg-primary p-2 text-base-300 hover:cursor-pointer hover:bg-primary-focus active:scale-95'>
-                    <AiOutlinePlus size={18} />
-                  </figure>
+          cartItems.map((item: IProduct) => {
+            return (
+              <div
+                key={item._id}
+                className='group flex gap-3 rounded-lg bg-base-200/40 p-2 duration-200 hover:bg-base-300'>
+                <figure className='flex items-center justify-center rounded-lg bg-primary/80 p-2 duration-200 group-hover:bg-primary'>
+                  <Image
+                    src={imgUrl(item.image[0]).url()}
+                    alt='item iamge'
+                    width={100}
+                    height={100}
+                  />
+                </figure>
+                <div className='flex w-full flex-col gap-3'>
+                  <hgroup className='flex w-full flex-col md:flex-row md:justify-between'>
+                    <h3 className='text-xl font-semibold text-primary-content'>
+                      {item.name}
+                    </h3>
+                    <h3 className='text-lg font-bold text-primary-content'>
+                      Rp{numberFormatter.format(item.price)}.000
+                    </h3>
+                  </hgroup>
+                  <div className='flex w-full items-center justify-between md:w-[50%]'>
+                    <figure
+                      onClick={() => cartItemQuantity(item._id, 'decrease')}
+                      className='rounded-lg bg-primary p-2 text-base-300 hover:cursor-pointer hover:bg-primary-focus active:scale-95'>
+                      <AiOutlineMinus size={18} />
+                    </figure>
+                    <p className='text-lg font-medium'>{item.quantities}</p>
+                    <figure
+                      onClick={() => cartItemQuantity(item._id, 'increase')}
+                      className='rounded-lg bg-primary p-2 text-base-300 hover:cursor-pointer hover:bg-primary-focus active:scale-95'>
+                      <AiOutlinePlus size={18} />
+                    </figure>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
       </section>
     </aside>
   );

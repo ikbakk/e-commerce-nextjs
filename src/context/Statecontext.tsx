@@ -59,18 +59,46 @@ const Statecontext = ({ children }: IProps) => {
     toast.success(`${quantity} ${product.name} added to the cart`);
   };
 
+  let foundProduct: IProduct;
+  let index;
+
+  const cartItemQuantity = (id: string, value: 'increase' | 'decrease') => {
+    foundProduct = cartItems.find((item: IProduct) => item._id === id);
+    index = cartItems.findIndex((product: IProduct) => product._id === id);
+    const newCartItems = cartItems.filter((item: IProduct) => item._id !== id);
+
+    if (value === 'increase') {
+      setCartItems([
+        ...newCartItems,
+        { ...foundProduct, quantities: foundProduct.quantities + 1 }
+      ]);
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+      setTotalQuantity((prevTotalQuantity) => prevTotalQuantity + 1);
+    } else if (value === 'decrease')
+      if (foundProduct.quantities > 1) {
+        setCartItems([
+          ...newCartItems,
+          { ...foundProduct, quantities: foundProduct.quantities - 1 }
+        ]);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+        setTotalQuantity((prevTotalQuantity) => prevTotalQuantity - 1);
+      }
+  };
+
   return (
     <Context.Provider
       value={{
         showCart,
         setShowCart,
         cartItems,
+        setCartItems,
         totalPrice,
         totalQuantity,
         quantities,
         increaseQuantity,
         decreaseQuantity,
-        onAdd
+        onAdd,
+        cartItemQuantity
       }}>
       {children}
     </Context.Provider>

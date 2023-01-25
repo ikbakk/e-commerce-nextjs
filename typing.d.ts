@@ -33,10 +33,12 @@ export interface IContextType {
   showCart: boolean;
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
   cartItems: any;
+  setCartItems: React.Dispatch<any>;
   totalPrice: number;
   totalQuantity: number;
   quantities: number;
   increaseQuantity: () => void;
   decreaseQuantity: () => void;
   onAdd: (product: IProduct, quantites: number) => void;
+  cartItemQuantity: (id: string, value: 'increase' | 'decrease') => void;
 }
