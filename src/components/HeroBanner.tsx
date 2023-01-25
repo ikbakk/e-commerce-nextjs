@@ -33,7 +33,7 @@ const HeroBanner = ({ data }: Props) => {
         </header>
         <Link className='group w-fit' href={`/product/${product}`}>
           <button
-            className='rounded-2xl bg-accent px-4 py-2 text-3xl font-medium text-accent-content duration-200 group-hover:cursor-pointer group-active:scale-95 group-active:bg-accent-focus md:text-4xl'
+            className='rounded-2xl bg-accent px-4 py-2 text-3xl font-medium uppercase text-accent-content duration-200 group-hover:cursor-pointer group-hover:bg-accent-content group-hover:text-accent group-active:scale-95 group-active:bg-accent-focus md:text-4xl'
             type='button'>
             {buttonText}
           </button>
