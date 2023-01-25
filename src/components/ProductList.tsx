@@ -1,6 +1,5 @@
 import React from 'react';
 import { IProduct } from 'typing';
-import { imgUrl } from '@/utils/sanity';
 import ProductCard from './ProductCard';
 
 type Props = {
@@ -18,7 +17,7 @@ const ProductList = ({ data }: Props) => {
           There are many variations passages
         </p>
       </header>
-      <div className='flex gap-5'>
+      <div className='grid grid-cols-2 gap-5 md:grid-cols-4'>
         {data.map((info) => (
           <ProductCard key={info._id} info={info} />
         ))}
