@@ -21,7 +21,7 @@ export default function Home({ dataBanner, dataProduct }: Props) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='flex flex-col items-center'>
+      <main className='flex flex-col items-center bg-base-300'>
         <HeroBanner data={dataBanner} />
         <ProductList data={dataProduct} />
       </main>

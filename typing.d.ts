@@ -26,4 +26,17 @@ export interface IProduct {
   };
   price: number;
   details: string;
+  quantities: number;
+}
+
+export interface IContextType {
+  showCart: boolean;
+  setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
+  cartItems: any;
+  totalPrice: number;
+  totalQuantity: number;
+  quantities: number;
+  increaseQuantity: () => void;
+  decreaseQuantity: () => void;
+  onAdd: (product: IProduct, quantites: number) => void;
 }
