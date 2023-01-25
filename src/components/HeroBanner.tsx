@@ -13,23 +13,22 @@ const HeroBanner = ({ data }: Props) => {
   const {
     buttonText,
     desc,
-    discount,
     image,
     largeText1,
     largeText2,
     midText,
     product,
-    saleTime,
     smallText
   } = data;
   return (
-    <section className='relative flex h-fit w-full flex-col items-center justify-between rounded-2xl bg-primary px-24 py-10 md:h-[31rem] md:flex-row'>
+    <section className='relative flex h-fit w-full flex-col items-center justify-between rounded-2xl bg-primary px-16 py-5 md:h-[31rem]  md:flex-row'>
       <section className='flex flex-col gap-y-5 md:gap-y-10'>
-        <header className='flex flex-col md:gap-y-10'>
+        <header className='flex flex-col'>
           <p className='text-xl'>{smallText}</p>
-          <h2 className='text-7xl font-medium'>{midText}</h2>
-          <h2 className='drop text-3xl font-bold md:text-[6rem]'>
-            {largeText1} {largeText2}
+          <h2 className='text-5xl font-medium'>{midText}</h2>
+          <h2 className='drop py-10 text-3xl font-bold text-base-100 md:flex md:gap-x-5 md:text-[8rem]'>
+            <span>{largeText1}</span>
+            <span>{largeText2}</span>
           </h2>
         </header>
         <Link className='group' href={`/products/${product}`}>
