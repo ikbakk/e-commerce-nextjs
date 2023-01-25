@@ -37,7 +37,7 @@ const Cart = () => {
   return (
     <aside
       ref={cartRef}
-      className={`fixed top-0 right-0 z-10 h-screen w-[70%] bg-base-100 shadow-lg ${sidebar} bg-white p-5 ease-in md:w-[30%]`}>
+      className={`fixed top-0 right-0 z-10 h-screen w-[70%] bg-base-100 p-2 shadow-lg ${sidebar} bg-white p-5 ease-in md:w-[30%]`}>
       <header className='flex items-center gap-3'>
         <figure
           className='cursor-pointer rounded-lg p-2 duration-75 hover:bg-black/20'
@@ -48,6 +48,7 @@ const Cart = () => {
           Your Cart ({totalQuantity} items)
         </h3>
       </header>
+
       <section>
         {cartItems.length < 1 && (
           <div className='flex h-screen w-full flex-col items-center justify-center gap-5 p-2 text-primary-content'>
@@ -62,6 +63,7 @@ const Cart = () => {
             </Link>
           </div>
         )}
+
         <section className='flex h-[90vh] flex-col justify-between gap-2'>
           <div className='h-[85%]'>
             {cartItems.length >= 1 &&
@@ -118,7 +120,7 @@ const Cart = () => {
                 );
               })}
           </div>
-          <div className='flex h-[15%] w-full flex-col gap-3'>
+          <div className='flex h-[15%] w-full flex-col gap-3 p-2'>
             <hgroup className='flex justify-between text-xl font-medium'>
               <h3>Subtotal: </h3>
               <h3>Rp{numberFormatter.format(totalPrice)}.000</h3>
