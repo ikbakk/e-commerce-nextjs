@@ -9,11 +9,11 @@ type Props = {
 };
 
 const ProductCard = ({ info }: Props) => {
-  const { _id, name, price, details, image } = info;
+  const { name, price, image, slug } = info;
   const shownImage = image && image[0];
   return (
     <div className='group rounded-lg p-2 hover:bg-base-300'>
-      <Link href={`/product/${name}`}>
+      <Link href={`/product/${slug.current}`}>
         <figure className='overflow-hidden rounded-lg bg-primary p-2 group-hover:cursor-pointer'>
           <Image
             className='duration-200 group-hover:scale-110'
