@@ -65,7 +65,7 @@ const Cart = () => {
         )}
 
         <section className='flex h-[90vh] flex-col justify-between gap-2'>
-          <div className='h-[85%]'>
+          <div className='h-[85%] overflow-auto'>
             {cartItems.length >= 1 &&
               cartItems.map((item: IProduct) => {
                 return (

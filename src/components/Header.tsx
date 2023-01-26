@@ -9,7 +9,7 @@ const Header = () => {
   });
 
   return (
-    <header className='navbar bg-base-100'>
+    <header className='navbar sticky top-0 z-10 bg-base-100 '>
       <nav className='flex-1'>
         <Link href='/' className='btn-ghost btn text-xl normal-case'>
           E-Shop
